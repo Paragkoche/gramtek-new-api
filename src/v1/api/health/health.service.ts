@@ -10,7 +10,6 @@ export class HealthService {
   systemHealth() {
     return generateApiResponse(
       {
-        status: 'ok',
         cpuUsage: this.cpuUses(),
       },
       'Health check',
