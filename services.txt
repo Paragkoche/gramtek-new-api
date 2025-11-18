@@ -1,0 +1,18 @@
+| Microservice                           | Depends On                              | Primary Language       | Rationale                                                        |
+| -------------------------------------- | --------------------------------------- | ---------------------- | ---------------------------------------------------------------- |
+| **Identity & Access (IAM)**            | —                                       | **Go**                 | High-performance auth flows, strong concurrency, low memory cost |
+| **Tenant & Billing**                   | IAM                                     | **Go**                 | Accurate billing + clean API boundaries                          |
+| **Territory & Assignment**             | IAM, Tenant & Billing                   | **Go**                 | Geo-based queries, reliable throughput                           |
+| **Subscription & Entitlements**        | IAM, Tenant & Billing                   | **Go**                 | Strong DB consistency + ACID-heavy logic                         |
+| **Inventory & Supply**                 | IAM, Tenant & Billing                   | **Java (Spring Boot)** | Mature ERP-like logic, complex validations                       |
+| **Delivery Execution**                 | IAM, Subscription, Territory, Inventory | **Node.js (NestJS)**   | Fast iteration + JSON-first offline sync API design              |
+| **PoD Service**                        | IAM, Delivery Execution                 | **Node.js (NestJS)**   | File handling + async PoD uploads + validation hooks             |
+| **Delivery Validation**                | IAM, PoD, Delivery Execution            | **Go**                 | Security-critical workflow enforcement                           |
+| **Settlement & Payments**              | IAM, Delivery Validation, Inventory     | **Java (Spring Boot)** | Audit-heavy finance logic, rock-solid reliability                |
+| **Sync Gateway (Offline Sync Engine)** | IAM (+ indirect delivery services)      | **Rust**               | Zero data-loss offline queue handling, safety at the edge        |
+| **File & Media Service**               | IAM                                     | **Go**                 | Efficient streaming + image processing                           |
+| **SDUI Engine**                        | IAM, Tenant & Billing, Delivery state   | **Node.js (NestJS)**   | JSON schema generation + dynamic UI logic                        |
+| **Fraud Detection**                    | PoD, Validation, Execution              | **Python**             | ML-analytics flexibility, anomaly scoring                        |
+| **Analytics Engine**                   | All transactional streams               | **Python**             | Data ETL pipelines + reporting                                   |
+| **Audit Logging Service**              | Every write-capable service             | **Rust**               | Tamper-resistant logging + ultra-low overhead                    |
+| **Super Admin Console (Backend)**      | IAM, Billing, Audit                     | **Go**                 | Governance + security-sensitive operations                       |
